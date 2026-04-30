@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mandala P&P</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .wrap {
+    width: min(700px, 100vw);
+    aspect-ratio: 1;
+  }
+  svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+  }
+  svg text {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+<svg id="mandala" viewBox="0 0 760 760" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- gradiente anel órbita interna -->
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#6D4C9E"/>
+      <stop offset="33%"  stop-color="#4A8AC9"/>
+      <stop offset="66%"  stop-color="#67C089"/>
+      <stop offset="100%" stop-color="#EC1C5C"/>
+    </linearGradient>
+
+    <!-- gradiente anel órbita externa -->
+    <linearGradient id="outerOrbitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#EC1C5C" stop-opacity="0.5"/>
+      <stop offset="33%"  stop-color="#6D4C9E" stop-opacity="0.5"/>
+      <stop offset="66%"  stop-color="#4A8AC9" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#67C089" stop-opacity="0.5"/>
+    </linearGradient>
+
+    <!-- gradiente anel decorativo externo -->
+    <linearGradient id="decorRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#6D4C9E" stop-opacity="0.3"/>
+      <stop offset="50%"  stop-color="#4A8AC9" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#EC1C5C" stop-opacity="0.3"/>
+    </linearGradient>
+
+    <!-- glow suave para nós -->
+    <filter id="node-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="center-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- caminhos circulares para texto curvo na órbita externa -->
+    <!-- raio 295: texto no topo e base -->
+    <path id="textCircleTop"    d="M 380,85  A 295,295 0 0 1 380.01,85"/>
+    <path id="textCircleTopL"   d="M 85,380  A 295,295 0 0 1 675,380"/>
+    <path id="textCircleTopR"   d="M 675,380 A 295,295 0 0 1 85,380"/>
+
+    <!-- 4 arcos para as 4 palavras na órbita externa — raio 295, centro 380,380 -->
+    <!-- posicionados em 4 quadrantes: topo (315°→45°), direita (45°→135°), baixo (135°→225°), esquerda (225°→315°) -->
+    <path id="arc0" d="M 588.9,171.1 A 295,295 0 0 1 588.9,588.9"/>
+    <path id="arc1" d="M 588.9,588.9 A 295,295 0 0 1 171.1,588.9"/>
+    <path id="arc2" d="M 171.1,588.9 A 295,295 0 0 1 171.1,171.1"/>
+    <path id="arc3" d="M 171.1,171.1 A 295,295 0 0 1 588.9,171.1"/>
+  </defs>
+
+  <!-- anel externo decorativo -->
+  <circle cx="380" cy="380" r="345" fill="none" stroke="url(#decorRingGrad)" stroke-width="0.75" stroke-dasharray="3 10" opacity="0.6"/>
+  <circle cx="380" cy="380" r="335" fill="none" stroke="url(#decorRingGrad)" stroke-width="0.4" stroke-dasharray="1 8" opacity="0.3"/>
+
+  <!-- pétalas externas -->
+  <g id="petals-outer" opacity="0.38">
+    <g transform="rotate(0 380 380)">  <ellipse cx="380" cy="48" rx="5" ry="16" fill="none" stroke="#6D4C9E" stroke-width="0.75"/></g>
+    <g transform="rotate(30 380 380)"> <ellipse cx="380" cy="48" rx="5" ry="16" fill="none" stroke="#4A8AC9" stroke-width="0.75"/></g>
+    <g transform="rotate(60 380 380)"> <ellipse cx="380" cy="48" rx="5" ry="16" fill="none" stroke="#EC1C5C" stroke-width="0.75"/></g>
+    <g transform="rotate(90 380 380)"> <ellipse cx="380" cy="48" rx="5" ry="16" fill="none" stroke="#67C089" stroke-width="0.75"/></g>
+    <g transform="rotate(120 380 380)"><ellipse cx="380" cy="48" rx="5" ry="16" fill="none" stroke="#6D4C9E" stroke-width="0.75"/></g>
+    <g transform="rotate(150 380 380)"><ellipse cx="380" cy="48" rx="5" ry="16" fill="none" stroke="#4A8AC9" stroke-width="0.75"/></g>
+    <g transform="rotate(180 380 380)"><ellipse cx="380" cy="48" rx="5" ry="16" fill="none" stroke="#EC1C5C" stroke-width="0.75"/></g>
+    <g transform="rotate(210 380 380)"><ellipse cx="380" cy="48" rx="5" ry="16" fill="none" stroke="#67C089" stroke-width="0.75"/></g>
+    <g transform="rotate(240 380 380)"><ellipse cx="380" cy="48" rx="5" ry="16" fill="none" stroke="#6D4C9E" stroke-width="0.75"/></g>
+    <g transform="rotate(270 380 380)"><ellipse cx="380" cy="48" rx="5" ry="16" fill="none" stroke="#4A8AC9" stroke-width="0.75"/></g>
+    <g transform="rotate(300 380 380)"><ellipse cx="380" cy="48" rx="5" ry="16" fill="none" stroke="#EC1C5C" stroke-width="0.75"/></g>
+    <g transform="rotate(330 380 380)"><ellipse cx="380" cy="48" rx="5" ry="16" fill="none" stroke="#67C089" stroke-width="0.75"/></g>
+  </g>
+
+  <!-- ═══ ÓRBITA EXTERNA: textos curvos (giram por JS) ═══ -->
+  <g id="outer-orbit-group">
+    <!-- anel da órbita externa -->
+    <circle cx="380" cy="380" r="295" fill="none" stroke="url(#outerOrbitGrad)" stroke-width="1" stroke-dasharray="2 7" opacity="0.7"/>
+
+    <!-- 4 pílulas com textos posicionadas na órbita r=295, centro 380,380 -->
+    <!-- ângulos médios: 0° (topo), 90° (direita), 180° (baixo), 270° (esquerda) -->
+    <!-- topo: cx=380, cy=380-295=85 -->
+    <g id="pill0">
+      <rect x="290" y="66" width="180" height="26" rx="13" fill="#EC1C5C" opacity="0.92"/>
+      <text x="380" y="83" text-anchor="middle" font-size="10" font-weight="600" fill="#ffffff" letter-spacing="0.3">Foco do cliente</text>
+    </g>
+    <!-- direita: cx=380+295=675, cy=380 -->
+    <g id="pill1">
+      <rect x="612" y="367" width="140" height="26" rx="13" fill="#6D4C9E" opacity="0.92"/>
+      <text x="682" y="384" text-anchor="middle" font-size="10" font-weight="600" fill="#ffffff" letter-spacing="0.3">Profundidade técnica</text>
+    </g>
+    <!-- baixo: cx=380, cy=380+295=675 -->
+    <g id="pill2">
+      <rect x="237" y="662" width="286" height="26" rx="13" fill="#4A8AC9" opacity="0.92"/>
+      <text x="380" y="679" text-anchor="middle" font-size="10" font-weight="600" fill="#ffffff" letter-spacing="0.3">Corresponsabilidade e Parceria</text>
+    </g>
+    <!-- esquerda: cx=380-295=85, cy=380 -->
+    <g id="pill3">
+      <rect x="8" y="367" width="154" height="26" rx="13" fill="#67C089" opacity="0.92"/>
+      <text x="85" y="384" text-anchor="middle" font-size="9.5" font-weight="600" fill="#ffffff" letter-spacing="0.2">Transparência, ética</text>
+    </g>
+  </g>
+
+  <!-- trilha da órbita interna dos nós -->
+  <circle cx="380" cy="380" r="195" fill="none" stroke="url(#ringGrad)" stroke-width="1.5" stroke-dasharray="3 9" opacity="0.55"/>
+  <circle cx="380" cy="380" r="195" fill="none" stroke="url(#ringGrad)" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- raios (atualizados por JS) -->
+  <line id="spoke0" x1="380" y1="380" x2="380" y2="185" stroke="#6D4C9E" stroke-width="1" opacity="0.45"/>
+  <line id="spoke1" x1="380" y1="380" x2="549" y2="478" stroke="#4A8AC9" stroke-width="1" opacity="0.45"/>
+  <line id="spoke2" x1="380" y1="380" x2="211" y2="478" stroke="#EC1C5C" stroke-width="1" opacity="0.45"/>
+
+  <!-- glows dos nós (atualizados por JS) -->
+  <circle id="glow0" cx="380" cy="185" r="70" fill="#6D4C9E" opacity="0.18"/>
+  <circle id="glow1" cx="549" cy="478" r="70" fill="#4A8AC9" opacity="0.18"/>
+  <circle id="glow2" cx="211" cy="478" r="70" fill="#EC1C5C" opacity="0.18"/>
+
+  <!-- bordas externas dos nós -->
+  <circle id="border0" cx="380" cy="185" r="55" fill="none" stroke="#6D4C9E" stroke-width="2" opacity="0.9"/>
+  <circle id="border1" cx="549" cy="478" r="55" fill="none" stroke="#4A8AC9" stroke-width="2" opacity="0.9"/>
+  <circle id="border2" cx="211" cy="478" r="55" fill="none" stroke="#EC1C5C" stroke-width="2" opacity="0.9"/>
+
+  <!-- halos internos -->
+  <circle id="halo0" cx="380" cy="185" r="45" fill="none" stroke="#6D4C9E" stroke-width="0.75" opacity="0.4"/>
+  <circle id="halo1" cx="549" cy="478" r="45" fill="none" stroke="#4A8AC9" stroke-width="0.75" opacity="0.4"/>
+  <circle id="halo2" cx="211" cy="478" r="45" fill="none" stroke="#EC1C5C" stroke-width="0.75" opacity="0.4"/>
+
+  <!-- fill sólido dos nós — cores puras da marca -->
+  <circle id="node0" cx="380" cy="185" r="53" fill="#6D4C9E"/>
+  <circle id="node1" cx="549" cy="478" r="53" fill="#4A8AC9"/>
+  <circle id="node2" cx="211" cy="478" r="53" fill="#EC1C5C"/>
+
+  <!-- brilho nos nós -->
+  <circle id="shine0" cx="365" cy="173" r="7" fill="#ffffff" opacity="0.2"/>
+  <circle id="shine1" cx="534" cy="466" r="7" fill="#ffffff" opacity="0.2"/>
+  <circle id="shine2" cx="196" cy="466" r="7" fill="#ffffff" opacity="0.2"/>
+
+  <!-- textos dos nós (atualizados por JS) -->
+  <g id="label0">
+    <text x="380" y="175" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff" letter-spacing="0.5">OSCs</text>
+    <text x="380" y="191" text-anchor="middle" font-size="9.5" font-weight="400" fill="rgba(255,255,255,0.8)">Terceiro Setor</text>
+    <text x="380" y="203" text-anchor="middle" font-size="8.5" font-weight="300" fill="rgba(255,255,255,0.6)">Desenvolvimento</text>
+    <text x="380" y="213" text-anchor="middle" font-size="8.5" font-weight="300" fill="rgba(255,255,255,0.6)">institucional</text>
+  </g>
+  <g id="label1">
+    <text x="549" y="468" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff" letter-spacing="0.5">Empresas</text>
+    <text x="549" y="484" text-anchor="middle" font-size="9.5" font-weight="400" fill="rgba(255,255,255,0.8)">Gestão de RH</text>
+    <text x="549" y="496" text-anchor="middle" font-size="8.5" font-weight="300" fill="rgba(255,255,255,0.6)">Médio e grande</text>
+    <text x="549" y="506" text-anchor="middle" font-size="8.5" font-weight="300" fill="rgba(255,255,255,0.6)">porte</text>
+  </g>
+  <g id="label2">
+    <text x="211" y="468" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff" letter-spacing="0.5">Carreira</text>
+    <text x="211" y="484" text-anchor="middle" font-size="9.5" font-weight="400" fill="rgba(255,255,255,0.8)">Pessoas Físicas</text>
+    <text x="211" y="496" text-anchor="middle" font-size="8.5" font-weight="300" fill="rgba(255,255,255,0.6)">Orientação e</text>
+    <text x="211" y="506" text-anchor="middle" font-size="8.5" font-weight="300" fill="rgba(255,255,255,0.6)">coaching</text>
+  </g>
+
+  <!-- pétalas internas do centro -->
+  <circle cx="380" cy="380" r="108" fill="none" stroke="url(#ringGrad)" stroke-width="0.75" opacity="0.4"/>
+  <circle cx="380" cy="380" r="96"  fill="none" stroke="url(#ringGrad)" stroke-width="0.5" stroke-dasharray="5 6" opacity="0.3"/>
+  <g opacity="0.2" fill="none">
+    <ellipse cx="380" cy="284" rx="7" ry="20" stroke="#67C089"  stroke-width="0.75" transform="rotate(0 380 380)"/>
+    <ellipse cx="380" cy="284" rx="7" ry="20" stroke="#4A8AC9"  stroke-width="0.75" transform="rotate(60 380 380)"/>
+    <ellipse cx="380" cy="284" rx="7" ry="20" stroke="#6D4C9E"  stroke-width="0.75" transform="rotate(120 380 380)"/>
+    <ellipse cx="380" cy="284" rx="7" ry="20" stroke="#EC1C5C"  stroke-width="0.75" transform="rotate(180 380 380)"/>
+    <ellipse cx="380" cy="284" rx="7" ry="20" stroke="#67C089"  stroke-width="0.75" transform="rotate(240 380 380)"/>
+    <ellipse cx="380" cy="284" rx="7" ry="20" stroke="#4A8AC9"  stroke-width="0.75" transform="rotate(300 380 380)"/>
+  </g>
+
+  <!-- glow central -->
+  <circle cx="380" cy="380" r="88" fill="#67C089" opacity="0.12" filter="url(#center-glow)"/>
+
+  <!-- círculo central — cor sólida verde da marca -->
+  <circle cx="380" cy="380" r="84" fill="#67C089"/>
+  <circle cx="380" cy="380" r="84" fill="none" stroke="url(#ringGrad)" stroke-width="2.5" opacity="0.9"/>
+  <circle cx="380" cy="380" r="76" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- brilho interno central -->
+  <circle cx="358" cy="358" r="13" fill="#ffffff" opacity="0.1"/>
+
+  <!-- texto central -->
+  <text x="380" y="368" text-anchor="middle" font-size="10" font-weight="300" fill="rgba(255,255,255,0.65)" letter-spacing="2">ABORDAGEM</text>
+  <text x="380" y="392" text-anchor="middle" font-size="24" font-weight="800" fill="#ffffff" letter-spacing="3">P&amp;P</text>
+  <text x="380" y="409" text-anchor="middle" font-size="8" font-weight="300" fill="rgba(255,255,255,0.45)" letter-spacing="1.5">DEFININDO CAMINHOS</text>
+
+</svg>
+</div>
+
+<script>
+  document.fonts.ready.then(() => {
+    document.querySelectorAll('svg text').forEach(t => {
+      t.style.fontFamily = "'Plus Jakarta Sans', sans-serif";
+    });
+    startAnimation();
+  });
+
+  function startAnimation() {
+    const CX = 380, CY = 380;
+    const R_INNER = 195;  // raio órbita interna (nós)
+    const R_OUTER = 295;  // raio órbita externa (pílulas)
+    const TAU = 2 * Math.PI;
+    const SPEED_INNER = 0.00022;   // ~80s por volta
+    const SPEED_OUTER = 0.00008;   // ~220s por volta — bem mais lento
+
+    // ── NÓS INTERNOS ──
+    const nodes = [
+      {
+        ids: ['node0','border0','halo0','glow0'],
+        shine: document.getElementById('shine0'),
+        spoke: document.getElementById('spoke0'),
+        label: document.getElementById('label0'),
+        angle: -TAU / 4,
+      },
+      {
+        ids: ['node1','border1','halo1','glow1'],
+        shine: document.getElementById('shine1'),
+        spoke: document.getElementById('spoke1'),
+        label: document.getElementById('label1'),
+        angle: -TAU / 4 + TAU / 3,
+      },
+      {
+        ids: ['node2','border2','halo2','glow2'],
+        shine: document.getElementById('shine2'),
+        spoke: document.getElementById('spoke2'),
+        label: document.getElementById('label2'),
+        angle: -TAU / 4 + 2 * TAU / 3,
+      },
+    ];
+    nodes.forEach(n => {
+      n.circles = n.ids.map(id => document.getElementById(id));
+    });
+    const textDY = [-10, 6, 18, 29];
+
+    // ── PÍLULAS EXTERNAS ──
+    // cada pílula tem: elemento grupo, largura, altura (para calcular offset do rect)
+    const pillDefs = [
+      { id: 'pill0', w: 180, h: 26, angle: -TAU / 4        }, // topo
+      { id: 'pill1', w: 188, h: 26, angle: 0               }, // direita
+      { id: 'pill2', w: 286, h: 26, angle: TAU / 4 + TAU/2 }, // baixo — ajustado visualmente
+      { id: 'pill3', w: 180, h: 26, angle: TAU / 2         }, // esquerda
+    ];
+    // Recalcular: 4 pílulas espaçadas 90° na órbita externa
+    const pillAngles = [
+      -TAU / 4,               // topo
+      -TAU / 4 + TAU / 4,    // direita
+      -TAU / 4 + TAU / 2,    // baixo
+      -TAU / 4 + 3*TAU / 4,  // esquerda
+    ];
+
+    const pills = pillDefs.map((p, i) => {
+      const g     = document.getElementById(p.id);
+      const rect  = g.querySelector('rect');
+      const texts = g.querySelectorAll('text');
+      return { g, rect, texts, w: p.w, h: p.h, angle: pillAngles[i] };
+    });
+
+    // ── ANIMAÇÃO ──
+    let last = null;
+    let petalAngle = 0;
+    const petals = document.getElementById('petals-outer');
+    const outerGroup = document.getElementById('outer-orbit-group');
+    let outerAngle = 0;
+
+    function tick(ts) {
+      if (!last) last = ts;
+      const dt = ts - last;
+      last = ts;
+
+      // nós internos
+      nodes.forEach(n => {
+        n.angle += SPEED_INNER * dt;
+        const x = CX + R_INNER * Math.cos(n.angle);
+        const y = CY + R_INNER * Math.sin(n.angle);
+
+        n.circles.forEach(el => {
+          el.setAttribute('cx', x);
+          el.setAttribute('cy', y);
+        });
+        n.shine.setAttribute('cx', x - 15);
+        n.shine.setAttribute('cy', y - 12);
+        n.spoke.setAttribute('x2', x);
+        n.spoke.setAttribute('y2', y);
+
+        const txts = n.label.querySelectorAll('text');
+        txts.forEach((t, ti) => {
+          t.setAttribute('x', x);
+          t.setAttribute('y', y + textDY[ti]);
+        });
+      });
+
+      // órbita externa: girar o grupo todo com transform rotate
+      outerAngle += SPEED_OUTER * dt;
+      const deg = outerAngle * (180 / Math.PI);
+      outerGroup.setAttribute('transform', `rotate(${deg} ${CX} ${CY})`);
+
+      // contra-rotacionar cada pílula para o texto ficar legível
+      pills.forEach(p => {
+        p.g.setAttribute('transform', `rotate(${-deg} ${CX} ${CY})`);
+      });
+
+      // pétalas externas
+      petalAngle += 0.003;
+      petals.setAttribute('transform', `rotate(${petalAngle} ${CX} ${CY})`);
+
+      requestAnimationFrame(tick);
+    }
+
+    requestAnimationFrame(tick);
+  }
+</script>
+</body>
+</html>
